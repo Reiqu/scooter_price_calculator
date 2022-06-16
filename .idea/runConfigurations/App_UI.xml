@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="App UI" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="app.Start" />
+    <module name="scootec_scooter_calculator" />
+    <option name="PROGRAM_PARAMETERS" value="ui" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
