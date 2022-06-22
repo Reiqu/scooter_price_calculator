@@ -1,14 +1,14 @@
 package ui;
 
 import error.AccountNotFoundException;
-import logic.Benutzerverwaltung;
-import logic.Berechnung;
+import logic.UserAdministration;
+import logic.Calculation;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class AuthorizationWindow extends JDialog {
-    private Benutzerverwaltung benutzerverwaltung;
+    private UserAdministration userAdministration;
 
     private JPanel contentPane;
     private JButton button_login;
@@ -19,17 +19,14 @@ public class AuthorizationWindow extends JDialog {
     private JLabel label_password;
     private JPanel panel_main;
 
-    private final Berechnung berechnung;
-
-    public AuthorizationWindow(Berechnung berechnung, Benutzerverwaltung benutzerverwaltung) {
+    public AuthorizationWindow(Calculation calculation, UserAdministration userAdministration) {
         setContentPane(contentPane);
         setTitle("Authentifizierung");
         setModal(true);
         getRootPane().setDefaultButton(button_login);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        this.berechnung = berechnung;
-        this.benutzerverwaltung = benutzerverwaltung;
+        this.userAdministration = userAdministration;
 
         super.addWindowListener(new WindowAdapter() {
             @Override
@@ -42,13 +39,17 @@ public class AuthorizationWindow extends JDialog {
         button_login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                if (input_username.getText().equals("") || input_password.getText().equals("")) {
+                if (input_username.getText().equals("") || String.valueOf(input_password.getPassword()).equals("")) {
                     JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Benutzernamen und ein Passwort ein!");
                 } else {
                     try {
-                        if (AuthorizationWindow.this.benutzerverwaltung.getBenutzer(input_username.getText()) != null) {
-                            if (AuthorizationWindow.this.benutzerverwaltung.getBenutzer(input_username.getText()).checkPasswort(String.valueOf(input_password.getPassword()))) {
-                                AdministrationWindow administrationWindow = new AdministrationWindow(berechnung);;
+                        if (AuthorizationWindow.this.userAdministration.getUser(input_username.getText()) != null) {
+                            if (AuthorizationWindow.this.userAdministration.getUser(input_username.getText()).checkPassword(String.valueOf(input_password.getPassword()))) {
+                                if (AuthorizationWindow.this.userAdministration.isAdmin(input_username.getText())) {
+                                    AdministrationWindow administrationWindow = new AdministrationWindow(calculation);;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Nicht autorisiert!");
+                                }
                                 dispose();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Falsches Passwort!");

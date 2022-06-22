@@ -1,6 +1,6 @@
 package ui;
 
-import logic.Berechnung;
+import logic.Calculation;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class AdministrationWindow {
 
-    AdministrationWindow(Berechnung berechnung) {
+    AdministrationWindow(Calculation calculation) {
 
         JFrame frame = new JFrame("Administration");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -22,7 +22,7 @@ public class AdministrationWindow {
             public void actionPerformed(ActionEvent e) {
                 try {
                     float preis = Float.parseFloat(input_min.getText().replaceAll(",", "."));
-                    berechnung.setPreis_pro_minute(preis);
+                    calculation.setPrice_per_min(preis);
                     label_output_status.setText("Preis pro Minute wurde gesetzt auf: ");
                     output_changes.setText(String.valueOf(preis));
                 } catch (Exception e1) {
@@ -37,7 +37,7 @@ public class AdministrationWindow {
 
                 try {
                     float preis = Float.parseFloat(input_km.getText().replaceAll(",", "."));
-                    berechnung.setPreis_pro_km(preis);
+                    calculation.setPrice_per_km(preis);
                     label_output_status.setText("Preis pro Kilometer wurde gesetzt auf: ");
                     output_changes.setText(String.valueOf(preis));
                 } catch (Exception e1) {
@@ -60,7 +60,7 @@ public class AdministrationWindow {
 
                 try {
                     float preis = Float.parseFloat(input_entsperrpreis.getText().replaceAll(",", "."));
-                    berechnung.setPreis_pro_entsperrung(preis);
+                    calculation.setPrice_per_unlock(preis);
                     label_output_status.setText("Entsperrpreis wurde gesetzt auf:");
                     output_changes.setText(String.valueOf(preis));
                 } catch (Exception e1) {
@@ -70,9 +70,9 @@ public class AdministrationWindow {
             }
         });
 
-        input_entsperrpreis.setText(String.valueOf(berechnung.getPreis_pro_entsperrung()));
-        input_min.setText(String.valueOf(berechnung.getPreis_pro_minute()));
-        input_km.setText(String.valueOf(berechnung.getPreis_pro_km()));
+        input_entsperrpreis.setText(String.valueOf(calculation.getPrice_per_unlock()));
+        input_min.setText(String.valueOf(calculation.getPrice_per_min()));
+        input_km.setText(String.valueOf(calculation.getPrice_per_km()));
 
 
         frame.pack();

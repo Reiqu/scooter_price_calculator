@@ -1,60 +1,55 @@
 package models;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-
-public class Benutzer {
+public class User {
     private final String username;
-    private String displayName;
-    private Boolean istAdmin;
-    private String passwort_hash;
+    private final String displayName;
+    private Boolean isAdmin;
+    private final String password_hash;
 
-    final private String passwort_salt = "scootec";
+    final private String password_salt = "scootec";
 
     /**
      * Benutzer
      * @param username Nutzername
      * @param displayName Anzeigename
-     * @param istAdmin Boolean, ob Nutzer ein Admin ist
+     * @param isAdmin Boolean, ob Nutzer ein Admin ist
      * @param passwort Passwort
      */
-    public Benutzer(String username, String displayName, Boolean istAdmin, String passwort) {
+    public User(String username, String displayName, Boolean isAdmin, String passwort) {
         this.username = username;
         this.displayName = displayName;
-        this.istAdmin = istAdmin;
-        this.passwort_hash = setPasswort_hash(passwort, this.passwort_salt);
+        this.isAdmin = isAdmin;
+        this.password_hash = setPasswort_hash(passwort, this.password_salt);
     }
 
-    public Boolean getIstAdmin() throws NullPointerException {
-        return istAdmin;
+    public Boolean getIsAdmin() throws NullPointerException {
+        return isAdmin;
     }
 
-    public void setIstAdmin(Boolean istAdmin) {
-        this.istAdmin = istAdmin;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     /**
      * Hashes the given password with the given salt.
      *
-     * @param passwort
-     * @param passwort_salt
+     * @param password
+     * @param password_salt
      * @return hash of the password
      */
-    public String setPasswort_hash(String passwort, String passwort_salt) {
+    public String setPasswort_hash(String password, String password_salt) {
         // TODO: Implementierung einer Hashfunktion für das Passwort
         String generatedPasswordHash = null;
 /*
         try {
-            // Create MessageDigest instance for SHA-256
+            // Create MessageDigest instance for SHA-512
             MessageDigest md = MessageDigest.getInstance("SHA-512");
 
             // Add salt to MessageDigest
-            md.update(passwort_salt.getBytes(StandardCharsets.UTF_8));
+            md.update(password_salt.getBytes(StandardCharsets.UTF_8));
 
             // Get the hash's bytes
-            byte[] bytes = md.digest(passwort.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
             // Transform byte array into String
             StringBuilder sb = new StringBuilder();
@@ -67,17 +62,16 @@ public class Benutzer {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
  */
-        return passwort;
+        return password;
     }
 
     /**
      * Prüft, ob Passwort-Hash mit Passwort übereinstimmt.
      * @return Boolean true, falls Passwort-Hash mit Passwort übereinstimmt, false sonst.
      */
-    public Boolean checkPasswort(String passwort) {
-        return setPasswort_hash(passwort, this.passwort_salt).equals(this.passwort_hash);
+    public Boolean checkPassword(String password) {
+        return setPasswort_hash(password, this.password_salt).equals(this.password_hash);
     }
 
     /**

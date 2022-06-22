@@ -1,28 +1,29 @@
 package console;
 
 import error.AccountNotFoundException;
-import logic.Benutzerverwaltung;
-import logic.Berechnung;
+import logic.UserAdministration;
+import logic.Calculation;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Console {
     private int wahl;
-    private final Berechnung berechnung;
-    private final Benutzerverwaltung benutzerverwaltung;
+    private final Calculation calculation;
+    private final UserAdministration userAdministration;
+
+    // Konstrukteur
     public Console() {
-        this.benutzerverwaltung = new Benutzerverwaltung();
-        this.berechnung = new Berechnung(0.5f, 1.0f);
+        this.userAdministration = new UserAdministration();
+        this.calculation = new Calculation(0.5f, 1.0f);
 
         auswahl();
     }
 
     @SuppressWarnings("InfiniteRecursion")
-    private void auswahl() {;
+    private void auswahl() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("ScooTec Scooter Calculator!");
+        System.out.println("ScooTec Scooter Preis Rechner");
         System.out.println();
         System.out.println("Bitte geben sie ein, was sie machen wollen");
         System.out.println("[1] Streckenpreis berechnen");
@@ -61,7 +62,7 @@ public class Console {
             String streckeString = scanner.nextLine();
             float strecke = Float.parseFloat(streckeString.replaceAll(",", "\\."));
             System.out.println("Die Strecke betraegt: " + strecke + " km");
-            float preis = berechnung.berechnePreisProStrecke(strecke);
+            float preis = calculation.calcPricePerKM(strecke);
             System.out.println("Der Preis betraegt: " + preis + " Euro");
 
         } catch (Exception e) {
@@ -71,9 +72,9 @@ public class Console {
 
     private void preiseAnzeigen() {
         System.out.println("Preise: ");
-        System.out.println("Preis pro Minute: " + berechnung.getPreis_pro_minute() + " Euro");
-        System.out.println("Preis pro Kilometer: " + berechnung.getPreis_pro_km() + " Euro");
-        System.out.println("Preis pro Entsprechung: " + berechnung.getPreis_pro_entsperrung() + " Euro");
+        System.out.println("Preis pro Minute: " + calculation.getPrice_per_min() + " Euro");
+        System.out.println("Preis pro Kilometer: " + calculation.getPrice_per_km() + " Euro");
+        System.out.println("Preis pro Entsprechung: " + calculation.getPrice_per_unlock() + " Euro");
     }
 
     private void preiseBearbeiten() {
@@ -109,37 +110,52 @@ public class Console {
 
             // Print password
             System.out.println(
-                    "Password : " + password);
+                    "Passwort : " + new String(password));
 
 
-            if ((benutzerverwaltung.getBenutzer(username) != null)
-                    && benutzerverwaltung.getBenutzer(username).checkPasswort(Arrays.toString(password))) {
+            if ((userAdministration.getUser(username) != null)
+                    && userAdministration.getUser(username).checkPassword(new String(password))) {
+                System.out.println("Benutzer erfolgreich authorisiert");
+                if (userAdministration.isAdmin(username)) {
 
-                if (benutzerverwaltung.istAdmin(username)) {
-
-                    System.out.print("Bitte geben sie den neuen Preis pro Minute an: ");
+                    System.out.print("Bitte geben sie den neuen Preis pro Minute an: (leer lassen, falls nicht geaendert) ");
                     String preis_pro_minuteString = scanner.nextLine();
-                    float preis_pro_minute = Float.parseFloat(preis_pro_minuteString.replaceAll(",", "\\."));
-                    System.out.println("Der neue Preis pro Minute betraegt: " + preis_pro_minute + " Euro");
-                    berechnung.setPreis_pro_minute(preis_pro_minute);
+                    if (!preis_pro_minuteString.isEmpty()) {
+                        float preis_pro_minute = Float.parseFloat(preis_pro_minuteString.replaceAll(",", "\\."));
+                        calculation.setPrice_per_min(preis_pro_minute);
+                        System.out.println("Der neue Preis pro Minute betraegt: " + preis_pro_minute + " Euro");
+                    } else {
+                        System.out.println("Der Preis pro Minute betraegt weiterhin: " + calculation.getPrice_per_min() + " Euro");
+                    }
 
 
                     System.out.print("Bitte geben sie den neuen Preis pro Kilometer an: ");
                     String preis_pro_kmString = scanner.nextLine();
-                    float preis_pro_km = Float.parseFloat(preis_pro_kmString.replaceAll(",", "\\."));
-                    System.out.println("Der neue Preis pro Kilometer betraegt: " + preis_pro_km + " Euro");
-                    berechnung.setPreis_pro_km(preis_pro_km);
+                    if (!preis_pro_kmString.isEmpty()) {
+                        float preis_pro_km = Float.parseFloat(preis_pro_kmString.replaceAll(",", "\\."));
+                        calculation.setPrice_per_km(preis_pro_km);
+                        System.out.println("Der neue Preis pro Kilometer betraegt: " + preis_pro_km + " Euro");
+                    } else {
+                        System.out.println("Der Preis pro Kilometer betraegt weiterhin: " + calculation.getPrice_per_km() + " Euro");
+                    }
 
                     System.out.print("Bitte geben sie den neuen Preis pro Entsprechung an: ");
                     String preis_pro_entsperrungString = scanner.nextLine();
-                    float preis_pro_entsperrung = Float.parseFloat(preis_pro_entsperrungString.replaceAll(",", "\\."));
-                    System.out.println("Der neue Preis pro Entsprechung betraegt: " + preis_pro_entsperrung + " Euro");
-                    berechnung.setPreis_pro_entsperrung(preis_pro_entsperrung);
+                    if (!preis_pro_entsperrungString.isEmpty()) {
+                        float preis_pro_entsperrung = Float.parseFloat(preis_pro_entsperrungString.replaceAll(",", "\\."));
+                        calculation.setPrice_per_unlock(preis_pro_entsperrung);
+                        System.out.println("Der neue Preis pro Entsprechung betraegt: " + preis_pro_entsperrung + " Euro");
+                    } else {
+                        System.out.println("Der Preis pro Entsprechung betraegt weiterhin: " + calculation.getPrice_per_unlock() + " Euro");
+                    }
 
                 } else {
                     System.out.println("Sie sind nicht berechtigt, diesen Vorgang durchzufuehren");
                     auswahl();
                 }
+            } else {
+                System.out.println("Benutzer nicht authorisiert");
+                auswahl();
             }
         } catch (AccountNotFoundException e) {
             System.out.println("Benutzer nicht gefunden und/oder Passwort falsch");
@@ -157,7 +173,7 @@ public class Console {
             double dauer = Double.parseDouble(dauerString.replaceAll(",", "\\."));
             System.out.println("Die Dauer betraegt: " + dauer + " Minuten");
             System.out.println("Die Minuten werden automatisch aufgerundet");
-            float preis = berechnung.berechnePreisProMinute((int) Math.ceil(dauer));
+            float preis = calculation.calcPricePerMin((int) Math.ceil(dauer));
             System.out.println("Der Preis betraegt: " + preis + " Euro");
 
         } catch (Exception e) {
