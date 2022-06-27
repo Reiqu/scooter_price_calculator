@@ -33,36 +33,13 @@ public class User {
     /**
      * Hashes the given password with the given salt.
      *
-     * @param password
-     * @param password_salt
+     * @param password Password to hash
+     * @param password_salt Salt to hash with
      * @return hash of the password
      */
     public String setPasswort_hash(String password, String password_salt) {
-        // TODO: Implementierung einer Hashfunktion für das Passwort
+        // NICETOHAVE: Implementierung einer Hashfunktion für das Passwort
         String generatedPasswordHash = null;
-/*
-        try {
-            // Create MessageDigest instance for SHA-512
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-
-            // Add salt to MessageDigest
-            md.update(password_salt.getBytes(StandardCharsets.UTF_8));
-
-            // Get the hash's bytes
-            byte[] bytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            // Transform byte array into String
-            StringBuilder sb = new StringBuilder();
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-
-            // Return hashed password
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
- */
         return password;
     }
 
@@ -80,5 +57,9 @@ public class User {
      */
     public String getUsername() {
         return this.username;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

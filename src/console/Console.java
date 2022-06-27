@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Console {
-    private int wahl;
     private final Calculation calculation;
     private final UserAdministration userAdministration;
 
@@ -32,16 +31,16 @@ public class Console {
         System.out.println("[4] Preise bearbeiten");
         System.out.println("[5] Programm beenden");
         try {
-            this.wahl = Integer.parseInt(scanner.nextLine());
-            if (this.wahl == 1) {
+            int wahl = Integer.parseInt(scanner.nextLine());
+            if (wahl == 1) {
                 streckenpreis();
-            } else if (this.wahl == 2) {
+            } else if (wahl == 2) {
                 zeitpreis();
-            } else if (this.wahl == 3) {
+            } else if (wahl == 3) {
                 preiseAnzeigen();
-            } else if (this.wahl == 4) {
+            } else if (wahl == 4) {
                 preiseBearbeiten();
-            } else if (this.wahl == 5) {
+            } else if (wahl == 5) {
                 System.out.println("Programm beenden..");
                 System.exit(0);
             } else {
@@ -55,6 +54,8 @@ public class Console {
         }
     }
 
+
+    // Streckenpreis berechnen
     private void streckenpreis() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Bitte geben sie die Strecke in km an: ");
@@ -70,6 +71,8 @@ public class Console {
         }
     }
 
+
+    // Preise anzeigen
     private void preiseAnzeigen() {
         System.out.println("Preise: ");
         System.out.println("Preis pro Minute: " + calculation.getPrice_per_min() + " Euro");
@@ -77,41 +80,27 @@ public class Console {
         System.out.println("Preis pro Entsprechung: " + calculation.getPrice_per_unlock() + " Euro");
     }
 
+
+    // Preise bearbeiten
     private void preiseBearbeiten() {
         Scanner scanner = new Scanner(System.in);
-        java.io.Console console = System.console();
         try {
 
             System.out.println("Bitte authorisieren Sie sich");
+            java.io.Console console = System.console();
 
-//            String username = console.readLine("Nutzername: ");
- //           String password = Arrays.toString(console.readPassword("Passwort: "));
-
-            java.io.Console cnsl = System.console();
-
-            if (cnsl == null) {
+            if (console == null) {
                 System.out.println(
                         "No console available");
                 return;
             }
 
-            // Read line
-            String username = cnsl.readLine(
+            String username = console.readLine(
                     "Enter username : ");
-
-            // Print username
             System.out.println(
                     "Nutzername : " + username);
-
-            // Read password
-            // into character array
-            char[] password = cnsl.readPassword(
+            char[] password = console.readPassword(
                     "Passwort : ");
-
-            // Print password
-            System.out.println(
-                    "Passwort : " + new String(password));
-
 
             if ((userAdministration.getUser(username) != null)
                     && userAdministration.getUser(username).checkPassword(new String(password))) {
@@ -129,7 +118,7 @@ public class Console {
                     }
 
 
-                    System.out.print("Bitte geben sie den neuen Preis pro Kilometer an: ");
+                    System.out.print("Bitte geben sie den neuen Preis pro Kilometer an:  (leer lassen, falls nicht geaendert)");
                     String preis_pro_kmString = scanner.nextLine();
                     if (!preis_pro_kmString.isEmpty()) {
                         float preis_pro_km = Float.parseFloat(preis_pro_kmString.replaceAll(",", "\\."));
@@ -139,7 +128,7 @@ public class Console {
                         System.out.println("Der Preis pro Kilometer betraegt weiterhin: " + calculation.getPrice_per_km() + " Euro");
                     }
 
-                    System.out.print("Bitte geben sie den neuen Preis pro Entsprechung an: ");
+                    System.out.print("Bitte geben sie den neuen Preis pro Entsprechung an: (leer lassen, falls nicht geaendert)");
                     String preis_pro_entsperrungString = scanner.nextLine();
                     if (!preis_pro_entsperrungString.isEmpty()) {
                         float preis_pro_entsperrung = Float.parseFloat(preis_pro_entsperrungString.replaceAll(",", "\\."));
@@ -165,6 +154,8 @@ public class Console {
         }
     }
 
+
+    // Zeitpreis berechnen
     private void zeitpreis() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Bitte geben sie die Dauer in Minuten an: ");
@@ -181,6 +172,8 @@ public class Console {
         }
     }
 
+
+    // Fehlerbehandlung
     private void errorHandling(String wahl) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Falsche Eingabe. Bitte erneut versuchen");

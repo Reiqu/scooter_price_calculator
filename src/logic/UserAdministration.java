@@ -10,6 +10,13 @@ public class UserAdministration {
             new User("user1", "user 1", false, "user1"),
             new User("user2", "user 2", false, "user2"),
     };
+
+
+    /**
+     * @param username Benutzername
+     * @return User
+     * @throws AccountNotFoundException Wenn Benutzer nicht gefunden wird
+     */
     public User getUser(String username) throws AccountNotFoundException {
         for (User b : users) {
             if (b.getUsername().equals(username)) {
