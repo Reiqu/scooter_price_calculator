@@ -10,23 +10,20 @@ public class UserAdministration {
             new User("user1", "user 1", false, "user1"),
             new User("user2", "user 2", false, "user2"),
     };
-
-    private User current_User;
-
     public User getUser(String username) throws AccountNotFoundException {
         for (User b : users) {
             if (b.getUsername().equals(username)) {
                 return b;
             }
         }
-        throw new AccountNotFoundException("Benutzer nicht gefunden!");
+        throw new AccountNotFoundException();
     }
 
 
     /**
      * Prüft, ob der Benutzer ein Admin ist.
-     * @param username
-     * @return true, falls der Benutzer ein Admin ist, false sonst.
+     * @param username Benutzername
+     * @return true, falls der Benutzer ein Admin ist, sonst false.
      */
     public Boolean isAdmin(String username) throws AccountNotFoundException {
         User b = getUser(username);
@@ -36,29 +33,7 @@ public class UserAdministration {
         return false;
     }
 
-    /**
-     * Prüft, ob der aktuelle Benutzer ein Admin ist.
-     * @return true, falls der aktuelle Benutzer ein Admin ist, false sonst.
-     */
-    public Boolean isAdmin() {
-        try {
-            return current_User.getIsAdmin();
-        } catch (NullPointerException e) {
-            return false;
-        }
-    }
     public UserAdministration() {
     }
 
-    public void setCurrentUser(User current_User) {
-        this.current_User = current_User;
-    }
-
-    public User getCurrentUser() {
-        return current_User;
-    }
-
-    public Boolean isLoggedIn() {
-        return current_User != null;
-    }
 }

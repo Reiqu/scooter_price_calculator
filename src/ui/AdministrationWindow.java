@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 public class AdministrationWindow {
 
     AdministrationWindow(Calculation calculation) {
-
         JFrame frame = new JFrame("Administration");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 400);
@@ -17,57 +16,42 @@ public class AdministrationWindow {
         frame.setContentPane(panel_main);
         frame.setVisible(true);
         frame.pack();
-        button_time_save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    float preis = Float.parseFloat(input_min.getText().replaceAll(",", "."));
-                    calculation.setPrice_per_min(preis);
-                    label_output_status.setText("Preis pro Minute wurde gesetzt auf: ");
-                    output_changes.setText(String.valueOf(preis));
-                } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
-                }
-                frame.pack();
+        button_time_save.addActionListener(event -> {
+            try {
+                float preis = Float.parseFloat(input_min.getText().replaceAll(",", "."));
+                calculation.setPrice_per_min(preis);
+                label_output_status.setText("Preis pro Minute wurde gesetzt auf: ");
+                output_changes.setText(String.valueOf(preis));
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
             }
+            frame.pack();
         });
-        button_km_save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        button_km_save.addActionListener(event -> {
 
-                try {
-                    float preis = Float.parseFloat(input_km.getText().replaceAll(",", "."));
-                    calculation.setPrice_per_km(preis);
-                    label_output_status.setText("Preis pro Kilometer wurde gesetzt auf: ");
-                    output_changes.setText(String.valueOf(preis));
-                } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
-                }
-                frame.pack();
+            try {
+                float preis = Float.parseFloat(input_km.getText().replaceAll(",", "."));
+                calculation.setPrice_per_km(preis);
+                label_output_status.setText("Preis pro Kilometer wurde gesetzt auf: ");
+                output_changes.setText(String.valueOf(preis));
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
             }
+            frame.pack();
         });
-        button_close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+        button_close.addActionListener(e -> frame.dispose());
+
+
+        button_entsperrpreis_save.addActionListener(actionlistener -> {
+            try {
+                float preis = Float.parseFloat(input_entsperrpreis.getText().replaceAll(",", "."));
+                calculation.setPrice_per_unlock(preis);
+                label_output_status.setText("Entsperrpreis wurde gesetzt auf:");
+                output_changes.setText(String.valueOf(preis));
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
             }
-        });
-
-
-        button_entsperrpreis_save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    float preis = Float.parseFloat(input_entsperrpreis.getText().replaceAll(",", "."));
-                    calculation.setPrice_per_unlock(preis);
-                    label_output_status.setText("Entsperrpreis wurde gesetzt auf:");
-                    output_changes.setText(String.valueOf(preis));
-                } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(frame, "Fehler: " + e1.getMessage());
-                }
-                frame.pack();
-            }
+            frame.pack();
         });
 
         input_entsperrpreis.setText(String.valueOf(calculation.getPrice_per_unlock()));
