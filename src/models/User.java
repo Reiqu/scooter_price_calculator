@@ -3,7 +3,7 @@ package models;
 public class User {
     private final String username;
     private final String displayName;
-    private Boolean isAdmin;
+    private final Boolean isAdmin;
     private final String password_hash;
 
     final private String password_salt = "scootec";
@@ -24,10 +24,6 @@ public class User {
 
     public Boolean getIsAdmin() throws NullPointerException {
         return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
     }
 
     /**
