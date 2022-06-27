@@ -14,8 +14,9 @@ public class AdministrationWindow {
         frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
         frame.setContentPane(panel_main);
-        frame.setVisible(true);
+        frame.setAlwaysOnTop(true);
         frame.pack();
+        frame.setVisible(true);
         button_time_save.addActionListener(event -> {
             try {
                 float preis = Float.parseFloat(input_min.getText().replaceAll(",", "."));
