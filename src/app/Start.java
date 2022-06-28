@@ -7,20 +7,17 @@ public class Start {
     public static void main(String... args) {
         if (args.length > 0) {
             switch (args[0]) {
-                case "ui": {
+                case "ui" -> {
                     System.out.println("Hello UI!");
-                    UserInterface ui = new UserInterface();;
-                    break;
+                    new UserInterface();
                 }
-                case "console": {
+                case "console" -> {
                     System.out.println("Hello Console!");
                     new Console();
-                    break;
                 }
-                default: {
+                default -> {
                     System.out.println("Hello default! Switching to console...");
                     new Console();
-                    break;
                 }
             }
         } else {
