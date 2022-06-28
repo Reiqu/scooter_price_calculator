@@ -11,25 +11,13 @@ public class Calculation {
     private float price_per_unlock = 0;
 
     /**
-     * Constructor to calculate scooter prices
+     * Konstruktor, um Preise zu berechnen ohne Entsperrpreis
      * @param price_per_min Preis pro Minute in Euro
      * @param price_per_km Preis pro Kilometer in Euro
      */
     public Calculation(float price_per_min, float price_per_km) {
         this.price_per_min = price_per_min;
         this.price_per_km = price_per_km;
-    }
-
-    /**
-     * Konstruktor
-     * @param price_per_min Preis pro Minute in Euro
-     * @param price_per_km Preis pro Kilometer in Euro
-     * @param price_per_unlock Preis pro Entsperrung in Euro
-     */
-    public Calculation(float price_per_min, float price_per_km, float price_per_unlock) {
-        this.price_per_min = price_per_min;
-        this.price_per_km = price_per_km;
-        this.price_per_unlock = price_per_unlock;
     }
 
     public float getPrice_per_min() {

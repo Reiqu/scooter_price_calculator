@@ -5,12 +5,11 @@ import models.User;
 
 public class UserAdministration {
     private final User[] users = {
-            new User("admin1", "admin 1", true, "admin1"),
-            new User("admin2", "admin 2", true, "admin2"),
-            new User("user1", "user 1", false, "user1"),
-            new User("user2", "user 2", false, "user2"),
+            new User("admin1", "admin1", true),
+            new User("admin2", "admin2", true),
+            new User("user1", "user1", false),
+            new User("user2", "user2", false),
     };
-
 
     /**
      * @param username Benutzername
