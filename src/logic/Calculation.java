@@ -20,6 +20,31 @@ public class Calculation {
         this.price_per_km = price_per_km;
     }
 
+    /**
+     * Berechnet den Preis pro Kilometer
+     * @param km Kilometer, die gefahren wurden
+     * @return Endpreis in Euro
+     */
+    public float calcPricePerKM(float km) {
+        return price_per_unlock + km * price_per_km;
+    }
+
+    /**
+     * Berechnet den Preis pro Minute
+     * @param minuten Minuten, welche der Benutzer gefahren hat
+     * @return Endpreis in Euro
+     */
+    public float calcPricePerMin(float minuten) {
+        return minuten * price_per_min + price_per_unlock;
+    }
+
+
+    /*
+    *
+    *  GETTER UND SETTER
+    *
+    */
+
     public float getPrice_per_min() {
         return price_per_min;
     }
@@ -42,24 +67,6 @@ public class Calculation {
 
     public void setPrice_per_unlock(float price_per_unlock) {
         this.price_per_unlock = price_per_unlock;
-    }
-
-    /**
-     * Berechnet den Preis pro Kilometer
-     * @param km Kilometer, die gefahren wurden
-     * @return Endpreis in Euro
-     */
-    public float calcPricePerKM(float km) {
-        return price_per_unlock + km * price_per_km;
-    }
-
-    /**
-     * Berechnet den Preis pro Minute
-     * @param minuten Minuten, welche der Benutzer gefahren hat
-     * @return Endpreis in Euro
-     */
-    public float calcPricePerMin(float minuten) {
-        return minuten * price_per_min + price_per_unlock;
     }
 
 

@@ -4,12 +4,20 @@ import error.AccountNotFoundException;
 import models.User;
 
 public class UserAdministration {
+
     private final User[] users = {
             new User("admin1", "admin1", true),
             new User("admin2", "admin2", true),
             new User("user1", "user1", false),
             new User("user2", "user2", false),
     };
+
+    /**
+     * Konstruktor für die Benutzerverwaltung
+     */
+    public UserAdministration() {
+    }
+
 
     /**
      * @param username Benutzername
@@ -25,7 +33,6 @@ public class UserAdministration {
         throw new AccountNotFoundException();
     }
 
-
     /**
      * Prüft, ob der Benutzer ein Admin ist.
      * @param username Benutzername
@@ -37,9 +44,6 @@ public class UserAdministration {
             return b.getIsAdmin();
         }
         return false;
-    }
-
-    public UserAdministration() {
     }
 
 }

@@ -5,6 +5,8 @@ import logic.Calculation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
@@ -52,13 +54,14 @@ public class UserInterface {
             }
         }
 
+        // Erstelle Klassen für Berechnung und Benutzerverwaltung
         calculation = new Calculation(0.5f, 0.2f);
         userAdministration = new UserAdministration();
 
+        // Füge ButtonGroup für die Radio Button ein
         radio_min.setSelected(true);
         radio_min.setActionCommand("min");
         radio_km.setActionCommand("km");
-
         ButtonGroup group = new ButtonGroup();
         group.add(radio_min);
         group.add(radio_km);
@@ -67,6 +70,11 @@ public class UserInterface {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
+        label_curr_price_km.setText("Aktuell: " + calculation.getPrice_per_km() + "€");
+        label_curr_price_min.setText("Aktuell: " + calculation.getPrice_per_min() + "€");
+        label_curr_price_unlock.setText("Entsperrpreis: " + calculation.getPrice_per_unlock() + "€");
+
+
         /*
            Actionlistener, um Verwaltungsfenster zu öffnen bzw. zuerst das Anmelde-Fenster
          */
@@ -74,8 +82,8 @@ public class UserInterface {
 
         // Listener vom Close Button
         button_close.addActionListener(e -> {
-            System.exit(0);
             frame.dispose();
+            System.exit(0);
         });
 
         // Listener vom Berechnen Button, der unter anderem Input abfragt und auch die Komma in Punkte umwandelt
@@ -118,18 +126,19 @@ public class UserInterface {
             @Override
             public void keyTyped(java.awt.event.KeyEvent event) {
                 char c = event.getKeyChar();
-                // Enter triggert den Button
 
+                // Enter triggert den Button
                 if (c == KeyEvent.VK_ENTER) {
                     button_calculate.doClick();
                 }
+
                 // Zahlen erlauben inkls Backspace und Entfernen, Komma und Punkte (keine Buchstaben)
                 if (!(
                         Character.isDigit(c)
                                 || (c == KeyEvent.VK_BACK_SPACE)
                                 || (c == KeyEvent.VK_DELETE)
-                                || c == KeyEvent.VK_COMMA
-                                || c == KeyEvent.VK_PERIOD
+                                || (c == KeyEvent.VK_COMMA)
+                                || (c == KeyEvent.VK_PERIOD)
                 )) {
                     event.consume();
                 }
@@ -139,10 +148,7 @@ public class UserInterface {
         // Listener: Inputfeld leeren
         button_clear.addActionListener(e -> output.setText(""));
 
-        label_curr_price_km.setText("Aktuell: " + calculation.getPrice_per_km() + "€");
-        label_curr_price_min.setText("Aktuell: " + calculation.getPrice_per_min() + "€");
-        label_curr_price_unlock.setText("Entsperrpreis: " + calculation.getPrice_per_unlock() + "€");
-
+        // Listener: Preise aktualisieren
         button_update_prices.addActionListener(e -> {
             label_curr_price_km.setText("Aktuell: " + calculation.getPrice_per_km() + "€");
             label_curr_price_min.setText("Aktuell: " + calculation.getPrice_per_min() + "€");

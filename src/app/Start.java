@@ -5,6 +5,10 @@ import ui.UserInterface;
 
 public class Start {
     public static void main(String... args) {
+
+        /*
+        * Startet je nach Argument die Konsolen- oder Fensterversion
+        */
         if (args.length > 0) {
             switch (args[0]) {
                 case "ui" -> {

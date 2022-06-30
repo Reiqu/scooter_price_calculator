@@ -15,8 +15,15 @@ public class AdministrationWindow {
         frame.setLocationRelativeTo(null);
         frame.setContentPane(panel_main);
         frame.setAlwaysOnTop(true);
-        frame.pack();
         frame.setVisible(true);
+
+        input_entsperrpreis.setText(String.valueOf(calculation.getPrice_per_unlock()));
+        input_min.setText(String.valueOf(calculation.getPrice_per_min()));
+        input_km.setText(String.valueOf(calculation.getPrice_per_km()));
+
+        frame.pack();
+
+
         button_time_save.addActionListener(event -> {
             try {
                 float preis = Float.parseFloat(input_min.getText().replaceAll(",", "."));
@@ -28,6 +35,8 @@ public class AdministrationWindow {
             }
             frame.pack();
         });
+
+
         button_km_save.addActionListener(event -> {
 
             try {
@@ -40,7 +49,6 @@ public class AdministrationWindow {
             }
             frame.pack();
         });
-        button_close.addActionListener(e -> frame.dispose());
 
 
         button_entsperrpreis_save.addActionListener(actionlistener -> {
@@ -55,12 +63,7 @@ public class AdministrationWindow {
             frame.pack();
         });
 
-        input_entsperrpreis.setText(String.valueOf(calculation.getPrice_per_unlock()));
-        input_min.setText(String.valueOf(calculation.getPrice_per_min()));
-        input_km.setText(String.valueOf(calculation.getPrice_per_km()));
-
-
-        frame.pack();
+        button_close.addActionListener(e -> frame.dispose());
     }
     private JPanel panel_main;
     private JTextField input_min;

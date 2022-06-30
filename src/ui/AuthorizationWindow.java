@@ -28,6 +28,10 @@ public class AuthorizationWindow extends JDialog {
 
         this.userAdministration = userAdministration;
 
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+
         super.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -38,14 +42,17 @@ public class AuthorizationWindow extends JDialog {
 
         button_login.addActionListener(e -> {
 
+            // Prüft, ob etwas eingegeben wurde
             if (input_username.getText().equals("") || String.valueOf(input_password.getPassword()).equals("")) {
                 JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Benutzernamen und ein Passwort ein!");
             } else {
                 try {
-                    // Prüft, ob etwas eingeben wurde
+                    // Prüft, ob ein vorhandener Benutzer eingegeben wurde
                     if (AuthorizationWindow.this.userAdministration.getUser(input_username.getText()) != null) {
+
                         // Prüft, ob das Passwort stimmt
                         if (AuthorizationWindow.this.userAdministration.getUser(input_username.getText()).checkPassword(String.valueOf(input_password.getPassword()))) {
+
                             // Prüft, ob der Benutzer ein Administrator ist
                             if (AuthorizationWindow.this.userAdministration.isAdmin(input_username.getText())) {
                                 AdministrationWindow administrationWindow = new AdministrationWindow(calculation);
@@ -65,11 +72,8 @@ public class AuthorizationWindow extends JDialog {
             }
         });
 
+        // Cancel Button
         button_cancel.addActionListener(e -> dispose());
-
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
 }

@@ -19,6 +19,10 @@ public class Console {
         auswahl();
     }
 
+
+    /*
+    * Auswahl Eingabe, was man machen möchte
+    */
     @SuppressWarnings("InfiniteRecursion")
     private void auswahl() {
         Scanner scanner = new Scanner(System.in);
@@ -106,6 +110,7 @@ public class Console {
                     && userAdministration.getUser(username).checkPassword(new String(password))) {
                 System.out.println("Benutzer erfolgreich authorisiert");
                 if (userAdministration.isAdmin(username)) {
+
 
                     System.out.print("Bitte geben sie den neuen Preis pro Minute an: (leer lassen, falls nicht geaendert) ");
                     String preis_pro_minuteString = scanner.nextLine();
